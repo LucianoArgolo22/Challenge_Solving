@@ -1,22 +1,22 @@
 # Challenge_Solving
-    - Para descargar el repo, hacer click en "code" obtener el ssh o http, y usar git clone "ubicación del repo".
-    - Se utilizó Poetry para manejo de dependencias, por ende, crear un ambiente virtual de poetry:
-      - instalar poetry: pip install poetry
-      - instalar todas las dependencias de poetry generando así el ambiente virtual: poetry install
-      - Seleccionar el ambiente virtual para estar usándolo a la hora de correr la solución.
-    - Se utilizó Docker para levantar una instancia de Postgres.
-      - Se generó un docker-compose.yml para simplificar levantar la instancia mencionada, correr el comando: docker-compose up
-        - La instancia va a estar corriendo en el puerto 5432 (local).
-        - usuario:"postgres" y contraseña:"example"
-    - Para poder tener Spark corriendo y poder ejecutar esa parte de la solución, seguir el paso a paso del siguiente tutorial (masomenos por la mitad explica el paso a paso de como hacerlo):
-      - https://sparkbyexamples.com/pyspark-tutorial/
+- Para descargar el repo, hacer click en "code" obtener el ssh o http, y usar git clone "ubicación del repo".
+- Se utilizó Poetry para manejo de dependencias, por ende, crear un ambiente virtual de poetry:
+  - instalar poetry: pip install poetry
+  - instalar todas las dependencias de poetry generando así el ambiente virtual: poetry install
+  - Seleccionar el ambiente virtual para estar usándolo a la hora de correr la solución.
+- Se utilizó Docker para levantar una instancia de Postgres.
+  - Se generó un docker-compose.yml para simplificar levantar la instancia mencionada, correr el comando: docker-compose up
+    - La instancia va a estar corriendo en el puerto 5432 (local).
+    - usuario:"postgres" y contraseña:"example"
+- Para poder tener Spark corriendo y poder ejecutar esa parte de la solución, seguir el paso a paso del siguiente tutorial (masomenos por la mitad explica el paso a paso de como hacerlo):
+  - https://sparkbyexamples.com/pyspark-tutorial/
         
 ## Ejercicio 1 - Manejo de datos:
-    - a) Crear la tabla “movimientos”, con el listado de todos los Movimientos, con el siguiente contenido : . Fecha . Descripción de Cliente . Descripción de Proveedor . Descripción de Producto . Descripción de Marca . Cantidad . Costo . Venta . Ganancia Neta
-    - b) En base a la tabla generada en a), consultar, ordenando por fecha y descripción del cliente: . fecha,  descripción de cliente y ganancia de las primeras 3 operaciones.
-    - c) Dado que las empresas en la base de datos pertenecen en su mayoría a un rubro con una alta curva de aprendizaje, es usual que las empresas no tengan bien calculados los costos y presenten ganancia negativa durante sus primeras operaciones.
-    - 1) Genere una consulta que devuelva las marcas con pérdidas en cada una de sus primeras 3 operaciones.
-    - 2) Una consulta con las que tuvieron pérdidas en sus primeras tres operaciones pero no en la cuarta.
+- a) Crear la tabla “movimientos”, con el listado de todos los Movimientos, con el siguiente contenido : . Fecha . Descripción de Cliente . Descripción de Proveedor . Descripción de Producto . Descripción de Marca . Cantidad . Costo . Venta . Ganancia Neta
+- b) En base a la tabla generada en a), consultar, ordenando por fecha y descripción del cliente: . fecha,  descripción de cliente y ganancia de las primeras 3 operaciones.
+- c) Dado que las empresas en la base de datos pertenecen en su mayoría a un rubro con una alta curva de aprendizaje, es usual que las empresas no tengan bien calculados los costos y presenten ganancia negativa durante sus primeras operaciones.
+- 1) Genere una consulta que devuelva las marcas con pérdidas en cada una de sus primeras 3 operaciones.
+- 2) Una consulta con las que tuvieron pérdidas en sus primeras tres operaciones pero no en la cuarta.
 
 ### Consideraciones Ejercicio 1:
     - El mismo ser resolvió utilizando sintaxis Sql, Cada query dentro de la carpeta "Ejercicio 1" corresponde a su correspondiente inciso.
