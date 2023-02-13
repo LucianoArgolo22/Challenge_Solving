@@ -36,9 +36,9 @@
       - ¿Por Qué Spark entonces?, por qué dado que se solicitó parametrizar la solicitud de cervezas a la api, podrían solicitarse 1 millón, y dado que uso explosionado y posteriormente hago joins, prefiero tener procesamiento distribuido de fondo para que pueda manejar semejante volumen que por ejemplo pandas no podría.
   - Ejecución de éste ejercicio mediante el comando:
     - El valor "80" representa la cantidad de cervezas que queremos recibir de la Api, el valor "True" que le sigue, es para decirle si queremos guardar en la DB o no (para el área de marketing que no se decide)
-    - Caso 1 guardando en Postgres DB: "python users.py 80 True"
-    - Caso 2 guardando en S3 y usando como parámetro 80 rows a solicitar a la api : "python users.py 80"
-    - Caso 3 guardando en S3 y por default va a correr el valor que tiene de cantidad de rows: "python users.py"
+    - Caso 1 guardando en Postgres DB: "python beers.py 80 True"
+    - Caso 2 guardando en S3 y usando como parámetro 80 rows a solicitar a la api : "python beers.py 80"
+    - Caso 3 guardando en S3 y por default va a correr el valor que tiene de cantidad de rows: "python beers.py"
 
 ### Teórica:
   link a Costos de S3 AWS https://aws.amazon.com/es/s3/pricing/
