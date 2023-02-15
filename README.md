@@ -74,7 +74,10 @@
         and month >= 4 AND month <= 10
 
         
-#--------------------------
+
+
+
+
 # Challenge_Solving Spanish 
 - Para descargar el repo, hacer click en "code" obtener el ssh o http, y usar git clone "ubicación del repo".
 - Se utilizó Poetry para manejo de dependencias, por ende, crear un ambiente virtual de poetry:
