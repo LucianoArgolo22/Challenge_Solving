@@ -1,4 +1,81 @@
-# Challenge_Solving
+# Challenge_Solving English 
+- To download the repo, click on "code" get the ssh or http, and use git clone "repo location".
+- Poetry was brought to manage dependencies, therefore, creating a virtual poetry environment:
+  - install poetry: pip install poetry
+  - install all the dependencies of poetry, thus appearing the virtual environment: poetry install
+  - Select the virtual environment to be using when running the solution.
+- Docker was increased to launch a Postgres instance.
+  - A docker-compose.yml will be highlighted to simplify raising the mentioned instance, run the command: docker-compose up
+    - The instance will be running on port 5432 (local).
+    - user:"postgres" and password:"example"
+- In order to have Spark running and be able to execute that part of the solution, follow the step-by-step of the following tutorial (more or less half of it explains the step-by-step of how to do it):
+  - https://sparkbyexamples.com/pyspark-tutorial/
+  
+## Exercise 1 - Data handling:
+- a) Create the "movements" table, with the list of all Movements, with the following content: . Date . Client Description . Provider Description . Product description . Brand Description. Amount . Cost . Sale . Net income
+- b) Based on the table generated in a), consult, ordering by date and description of the client: . date, customer description and profit of the first 3 operations.
+- c) Given that the companies in the database belong mostly to an area with a high learning curve, it is usual that the companies do not have well calculated costs and present negative profit during their first operations.
+- 1) Build a query that returns the losing marks on each of your first 3 trades.
+- 2) A consultation with those who had losses in their first three operations but not in the fourth.
+
+### Considerations Exercise 1:
+  - The same thing was solved using Sql syntax. Each query inside the "Exercise 1" folder corresponds to its corresponding subparagraph.
+
+## Exercise 2 - Python:
+### Part 1:
+  - For this part, pandas was used, since it is more than enough to be able to process a file of 1000 rows without too much latency (I understand this is a batch process).
+  - The credentials to access the aws bucket are not found, the empty file was uploaded in case you want to replace it to test it.
+  - Execution of this exercise through the command:
+    - The "True" value is for whether you want to use the database or not, if "True" is not set textually, the process will be saved in s3
+    - Case 1 saving in Postgres DB: "python users.py True"
+    - Case 2 saving to S3: "python users.py True"
+    
+ ### Part 2:
+  - For this part, pandas was used simply to be able to parse the file received from the API in json format (response.json()), later Spark was used for processing (both Pyspark and Spark Sql, I always find it interesting to combine both ways or keep them in mind at least given that some paths are easier one way than another, or at least for me it is).
+      - Why Spark then?, because since it was requested to parameterize the request for beers to the api, 1 million could be requested, and since it can be too computational, I prefer to have distributed processing in the background so that it can handle such a volume that for example pandas could not.
+  - Execution of this exercise through the command:
+    - The value "80" represents the number of beers that we want to receive from the API, the value "True" that follows it, is to tell if we want to save in the DB or not (for the marketing area that is not decided)
+    - Case 1 saving in Postgres DB: "python beers.py 80 True"
+    - Case 2 saving in S3 and using 80 rows as parameter to request to the api: "python beers.py 80"
+    - Case 3 saving in S3 and by default it will run the value it has for the number of rows: "python beers.py"
+ 
+ ### Theoretical:
+  link to Costs of S3 AWS https://aws.amazon.com/es/s3/pricing/
+  - 1) First of all, if you have data that you don't use, I would start by storing it in S3 with glacier. That has very low storage costs for long times if necessary, and with rapid access recovery if desired.
+       Assuming as the statement says, that you need to have access not so frequently at a reasonable price. What I would propose then is to use "S3 Intelligent - Tiering", which allows access to information that is not necessary to access frequently for a very low cost:
+         - S3 Intelligent - Tiering*:
+             - I quote: "S3 Intelligent-Tiering automatically stores objects in three access tiers: a hot access tier, an infrequent access tier costing 40% less than the hot access tier, and an instant access tier at files for 68% less cost than the infrequent access tier For a small monthly monitoring and automation fee per object, S3 Intelligent-Tiering monitors access patterns and moves objects that have not been accessed for 30 consecutive days at the infrequent access level and now, after 90 days without access, at the new instant file access level." (https://aws.amazon.com/es/about-aws/whats-new/2021/11/s3-intelligent-tiering-archive-instant-access-tier/)
+   - 2) I would use Airflow, since I understand it is a batch process, I would use a file sensor to detect that I have a new file in a certain location, assuming it is a large file I would use spark to do the necessary processing and cleanup. I would save the file to S3 and could upload it to Hive or some other database engine that supports compute and distributed storage (as long as the database table I'm uploading it to doesn't have by location (the "location" from the table) the location where I'm leaving it in S3, otherwise it would be redundant).
+   - 3) The change that I would propose is that instead of using a partition with the whole date "YYYYMMDD", I would make 3 different partitions, one that was the year - "YYYY", another the month "MM", and another the day " DD".
+        In the first place, avoid the substring and cast because they are operations that can be avoided if you separate the year, month and day using them as an integer.
+        Secondly, partitioning the table as mentioned, if, as in the example (the query), I consult a month, it would not be consulting the months of all the years, but could reduce the amount of metadata that is traversed behind, consulting only the months of the year that interests me, so that you want them, for example, based on the case that I say, both would remain:
+
+ ### DDLT:
+      - CREATE EXTERNAL TABLE my_spectrum.Data_Movimientos(
+        Cod_Prod integer,
+        Cod_Cliente integer,
+        Cantidad integer,
+        Costo decimal(8,2),
+        Venta decimal(8,2)
+        )
+        PARTITIONED BY (year int, month int, day int )  -- YYYYMMDD #YYYYMMDD #YYYYMMDD
+        ROW FORMAT DELIMITED
+        FIELDS TERMINATED BY '|'
+        STORED AS textfile
+        LOCATION 's3://bucket/spectrum/Data_Movimientos/‘
+  ### ETL:
+      - SELECT * FROM my_sepectrum.Data_Movimientos
+        WHERE month >= 4 AND month <= 10
+
+        (podría agregarse el año a menos que se quisieran saber esos intervalos de meses de todos los años)
+
+      - SELECT * FROM my_sepectrum.Data_Movimientos
+        WHERE year = YYYY
+        and month >= 4 AND month <= 10
+
+        
+#--------------------------
+# Challenge_Solving Spanish 
 - Para descargar el repo, hacer click en "code" obtener el ssh o http, y usar git clone "ubicación del repo".
 - Se utilizó Poetry para manejo de dependencias, por ende, crear un ambiente virtual de poetry:
   - instalar poetry: pip install poetry
@@ -31,14 +108,14 @@
     -  Caso 2 guardando en S3: "python users.py True"
 
 ### Parte 2:
-  - Para esta parte se utilizó pandas simplemente para poder parsear el archivo que se recibe de la Api en formato json (response.json()), posteriormente para el procesamiento se utilizó Spark (tanto Pyspark como Spark Sql, me parece siempre interesante combinar ambas formas o tenerlas presente almenos dado que algunos camino son más fáciles de una manera que de otra, o almenos para mí lo es). Al final terminé usando nuevamente Pandas, y la razón fue que no podía guardar directamente en S3 (se me complicó un poco para configurar las credenciales de aws usando spark para simplemente hacer un guardado directo desde el dataframe de spark en el bucket). 
-    además almenos para éste caso fue más simple conectar con la db de presto y enviarle el dataframe de pandas para que pueda cargar la info en la tabla.
-      - ¿Por Qué Spark entonces?, por qué dado que se solicitó parametrizar la solicitud de cervezas a la api, podrían solicitarse 1 millón, y dado que uso explosionado y posteriormente hago joins, prefiero tener procesamiento distribuido de fondo para que pueda manejar semejante volumen que por ejemplo pandas no podría.
+  - Para esta parte se utilizó pandas simplemente para poder parsear el archivo que se recibe de la Api en formato json (response.json()), posteriormente para el procesamiento se utilizó Spark (tanto Pyspark como Spark Sql, me parece siempre interesante combinar ambas formas o tenerlas presente almenos dado que algunos camino son más fáciles de una manera que de otra, o almenos para mí lo es).
+      - ¿Por Qué Spark entonces?, por qué dado que se solicitó parametrizar la solicitud de cervezas a la api, podrían solicitarse 1 millón, y dado que puede ser demasiado cómputo, prefiero tener procesamiento distribuido de fondo para que pueda manejar semejante volumen que por ejemplo pandas no podría.
   - Ejecución de éste ejercicio mediante el comando:
     - El valor "80" representa la cantidad de cervezas que queremos recibir de la Api, el valor "True" que le sigue, es para decirle si queremos guardar en la DB o no (para el área de marketing que no se decide)
     - Caso 1 guardando en Postgres DB: "python beers.py 80 True"
     - Caso 2 guardando en S3 y usando como parámetro 80 rows a solicitar a la api : "python beers.py 80"
     - Caso 3 guardando en S3 y por default va a correr el valor que tiene de cantidad de rows: "python beers.py"
+
 
 ### Teórica:
   link a Costos de S3 AWS https://aws.amazon.com/es/s3/pricing/
@@ -72,4 +149,6 @@
     - SELECT * FROM my_sepectrum.Data_Movimientos
       WHERE year = YYYY
       and month >= 4 AND month <= 10
+
+
 
