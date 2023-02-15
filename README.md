@@ -1,4 +1,4 @@
-# Challenge_Solving English 
+# Challenge_Solving English (in Spanish is below)
 - To download the repo, click on "code" get the ssh or http, and use git clone "repo location".
 - Poetry was brought to manage dependencies, therefore, creating a virtual poetry environment:
   - install poetry: pip install poetry
