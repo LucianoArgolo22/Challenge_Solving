@@ -1,11 +1,11 @@
 # Challenge_Solving English (in Spanish is below)
 - To download the repo, click on "code" get the ssh or http, and use git clone "repo location".
-- Poetry was brought to manage dependencies, therefore, creating a virtual poetry environment:
+- Poetry was used to manage dependencies, therefore, creating a virtual poetry environment:
   - install poetry: pip install poetry
   - install all the dependencies of poetry, thus appearing the virtual environment: poetry install
-  - Select the virtual environment to be using when running the solution.
-- Docker was increased to launch a Postgres instance.
-  - A docker-compose.yml will be highlighted to simplify raising the mentioned instance, run the command: docker-compose up
+  - Select the virtual environment to be use when running the solution.
+- Docker was implemented to launch a Postgres instance.
+  - A docker-compose.yml was generated to simplify raising the mentioned instance, run the command: docker-compose up
     - The instance will be running on port 5432 (local).
     - user:"postgres" and password:"example"
 - In order to have Spark running and be able to execute that part of the solution, follow the step-by-step of the following tutorial (more or less half of it explains the step-by-step of how to do it):
@@ -31,8 +31,8 @@
     - Case 2 saving to S3: "python users.py True"
     
  ### Part 2:
-  - For this part, pandas was used simply to be able to parse the file received from the API in json format (response.json()), later Spark was used for processing (both Pyspark and Spark Sql, I always find it interesting to combine both ways or keep them in mind at least given that some paths are easier one way than another, or at least for me it is).
-      - Why Spark then?, because since it was requested to parameterize the request for beers to the api, 1 million could be requested, and since it can be too computational, I prefer to have distributed processing in the background so that it can handle such a volume that for example pandas could not.
+  - For this part, Spark was used for processing (both Pyspark and Spark Sql, I always find it interesting to combine both ways or keep them in mind at least given that some paths are easier one way than another, or at least for me it is).
+      - Why Spark then?, because since it was requested to parameterize the request for beers to the api, 1 million could be requested, and since it can need to much compute, i prefer to have distributed processing in the background so that it can handle such a volume that for example pandas could not.
   - Execution of this exercise through the command:
     - The value "80" represents the number of beers that we want to receive from the API, the value "True" that follows it, is to tell if we want to save in the DB or not (for the marketing area that is not decided)
     - Case 1 saving in Postgres DB: "python beers.py 80 True"
