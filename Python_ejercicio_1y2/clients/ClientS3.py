@@ -15,7 +15,7 @@ client = boto3.client('s3',
                       )
 
 class ClientS3:
-    def __init__(self, log:object, bucket:str='etermax-challenge-engineering', nombre:str='Luciano', apellido:str='Argolo', file_name:str='parsed.csv', python:str=None):
+    def __init__(self, log:object, bucket:str='name-of-bucket', nombre:str='Luciano', apellido:str='Argolo', file_name:str='parsed.csv', python:str=None):
         self.client = client
         self.BUCKET = bucket
         self.file_name = file_name
